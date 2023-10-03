@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const { Project, User } = require('../models');
+const { Blog, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 //all html routes are doing get method is reading
-//http://localhost:3001/
+//http://localhost:3001/ ; Home page
 router.get('/', async (req, res) => {
   try {
-    // Get all projects and JOIN with user data
-    const projectData = await Project.findAll({
+    // Get all blog posts and JOIN with user data
+    const blogtData = await Blog.findAll({
       include: [
         {
           model: User,
@@ -15,16 +15,16 @@ router.get('/', async (req, res) => {
         },
       ],
     });
-    //select user.name , project.* from project join user on user.id = project.user_id
+    //select user.name , blog.* from blog join user on user.id = blog.user_id
 
-//projectData is raw data, can't use raw data on handlebar template
+//blogData.json is raw data, can't use raw data on handlebar template
     // Serialize data so the template can read it
     //take raw data and format it to json
-    const projects = projectData.map((project) => project.get({ plain: true }));
+    const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
     // Pass serialized data and session flag into template
     res.render('homepage', { 
-      projects, 
+      blogs, 
       logged_in: req.session.logged_in 
     });
   } catch (err) {
@@ -33,10 +33,10 @@ router.get('/', async (req, res) => {
 });
 
 
-//http://localhost:3001/project/1
-router.get('/project/:id', async (req, res) => {
+//http://localhost:3001/blog/1
+router.get('/blog/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
+    const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -45,10 +45,10 @@ router.get('/project/:id', async (req, res) => {
       ],
     });
 
-    const project = projectData.get({ plain: true });
+    const blog = blogData.get({ plain: true });
 
-    res.render('project', {
-      ...project,
+    res.render('blog', {
+      ...blog,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -64,7 +64,7 @@ router.get('/profile', withAuth, async (req, res) => {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
+      include: [{ model: Blog }],
     });
 
     const user = userData.get({ plain: true });
