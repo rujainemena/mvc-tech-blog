@@ -7,7 +7,7 @@ const withAuth = require('../utils/auth');
 router.get('/', async (req, res) => {
   try {
     // Get all blog posts and JOIN with user data
-    const blogtData = await Blog.findAll({
+    const blogData = await Blog.findAll({
       include: [
         {
           model: User,
@@ -17,15 +17,15 @@ router.get('/', async (req, res) => {
     });
     //select user.name , blog.* from blog join user on user.id = blog.user_id
 
-//blogData.json is raw data, can't use raw data on handlebar template
+    //blogData.json is raw data, can't use raw data on handlebar template
     // Serialize data so the template can read it
     //take raw data and format it to json
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
     // Pass serialized data and session flag into template
-    res.render('homepage', { 
-      blogs, 
-      logged_in: req.session.logged_in 
+    res.render('homepage', {
+      blogs,
+      logged_in: req.session.logged_in
     });
   } catch (err) {
     res.status(500).json(err);
