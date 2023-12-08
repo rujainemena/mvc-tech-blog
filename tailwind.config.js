@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./views/layouts/main.handlebars"],
   theme: {
     extend: {
       fontFamily: {
@@ -11,4 +11,12 @@ module.exports = {
     },
     plugins: [],
   },
+};
+
+module.exports = {
+  content: ["./views/login.handlebars", "./views/signup.handlebars"],
+  theme: {
+    extend: {},
+  },
+  plugins: [require("@tailwindcss/forms")],
 };
