@@ -1,50 +1,69 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fund My Project!</title>
-  <link href="/dist/output.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/jass.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fund My Project!</title>
+    <link href="/dist/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/jass.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
 
-<body>
-  <div class="flex-column justify-space-around">
-    <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        <span role="img" aria-label="money">💸</span>
-        <a href="/">Fund My Project!</a>
-      </h1>
-      <nav>
-        <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
-        <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
-        {{else}}
-        <a href="/login">login</a>
+  </head>
 
-               <a href="/login">signup</a>
-        {{/if}}
-      </nav>
-    </header>
-    <main class="container container-fluid mt-5">
-      <!-- Render the sub layout -->
-      {{{ body }}}
-    </main>
-    <footer>
-      
-    </footer>
-  </div>
+  <body>
+    <div class="flex-column justify-space-around">
 
-  <!-- Render script for logged in users only -->
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
+      {{! TAILWIND NAVBAR }}
+      <header class="bg-white-50">
+        <nav
+          class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          aria-label="Global"
+        >
+
+          <a
+            href="/"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >Home</a>
+
+          <div>
+            {{#if logged_in}}
+              <a
+                href="/profile"
+                class="text-sm font-semibold leading-6 text-gray-900"
+              >Dashboard</a>
+              |
+              <button class="no-button" id="logout">Logout</button>
+
+            {{else}}
+
+              <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                <a
+                  href="/login"
+                  class="text-sm font-semibold leading-6 text-gray-900"
+                >Login / Signup <span aria-hidden="true">&rarr;</span></a>
+              </div>
+
+            {{/if}}
+          </div>
+        </nav>
+      </header>
+
+      <main class="container container-fluid mt-5">
+        <!-- Render the sub layout -->
+        {{{body}}}
+      </main>
+      <footer>
+
+      </footer>
+    </div>
+
+    <!-- Render script for logged in users only -->
+    {{#if logged_in}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
+
+  </body>
+
   <script src="https://cdn.tailwindcss.com"></script>
-</body>
-
 </html>
