@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
-//http://localhost:3001/api/users/
+//http://localhost:3001/user/
 //callback req and res is your controller
 //api endpoint ->controller->model->return data to view
 router.post('/', async (req, res) => {
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 });
-
+//http://localhost:3001/user/login
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
     res.status(400).json(err);
   }
 });
-
+//http://localhost:3001/user/logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {

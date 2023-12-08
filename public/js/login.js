@@ -40,6 +40,7 @@ const signupFormHandler = async (event) => {
       document.location.replace('/profile');
     } else {
       alert(response.statusText);
+      console.log("unable to sign up");
     }
   }
 };
@@ -47,7 +48,3 @@ const signupFormHandler = async (event) => {
 document
   .querySelector('.login-form')
   .addEventListener('submit', loginFormHandler);
-
-document
-  .querySelector('.signup-form')
-  .addEventListener('submit', signupFormHandler);
