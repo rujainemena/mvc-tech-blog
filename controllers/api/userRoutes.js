@@ -3,6 +3,7 @@ const { User } = require('../../models');
 
 //http://localhost:3001/user/
 router.post('/', async (req, res) => {
+  console.log(req.body)
   try {
     const userData = await User.create(req.body);
 
@@ -16,11 +17,12 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 //http://localhost:3001/user/login
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
-
+    console.log(req.body);
     if (!userData) {
       res
         .status(400)
@@ -40,7 +42,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
+
       res.json({ user: userData, message: 'You are now logged in!' });
     });
 
@@ -48,6 +50,8 @@ router.post('/login', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+
 //http://localhost:3001/user/logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
